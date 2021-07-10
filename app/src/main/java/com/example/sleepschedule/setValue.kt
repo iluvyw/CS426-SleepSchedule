@@ -1,7 +1,7 @@
 package com.example.sleepschedule
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 interface setValue {
     fun setInt(context: Context,key: String,value: Int){
