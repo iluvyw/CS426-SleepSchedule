@@ -2,6 +2,7 @@ package com.example.sleepschedule
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.github.stefanodp91.android.circularseekbar.CircularSeekBar
 import com.github.stefanodp91.android.circularseekbar.OnCircularSeekBarChangeListener
 import kotlinx.android.synthetic.main.activity_sleep_hour.*
@@ -38,5 +39,14 @@ class SleepHourActivity : AppCompatActivity() {
              */
             override fun onStopTrackingTouch(CircularSeekBar: CircularSeekBar) {}
         })
+
+    }
+
+    // Start button click
+    fun startCountTime(view: View) {
+        buttonStart.visibility = View.GONE
+        buttonNext.visibility = View.GONE
+        countUpTimer.start()
+        countUpTimer.visibility = View.VISIBLE
     }
 }

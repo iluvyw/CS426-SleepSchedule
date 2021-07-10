@@ -6,18 +6,75 @@
     android:layout_height="match_parent"
     tools:context=".SleepHourActivity">
 
+    <TextView
+        android:id="@+id/textView_SleepDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="@string/SleepDuration"
+        android:textColor="@color/pink_500"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.github.stefanodp91.android.circularseekbar.CircularSeekBar
         android:id="@+id/seek"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         app:cs_arcRadius="150dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cs_color_list="@array/color_list"
+        app:cs_dynamic_text_color="true"
+        app:cs_indicator_enabled="false"
+        app:cs_progressWidth="7dp"
         app:cs_text="Hour"
         app:cs_text_progress="false"
-        app:cs_color_list="@array/color_list"
-        app:cs_progressWidth="10dp"
-        app:cs_indicator_enabled="false"
-        app:cs_dynamic_text_color="true"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_SleepDuration" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/Start"
+        android:textSize="20sp"
+        android:backgroundTint="#8BC34A"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seek"
+        android:onClick="startCountTime"/>
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:backgroundTint="#009688"
+        app:layout_constraintTop_toBottomOf="@id/seek" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:id="@+id/countUpTimer"
+        android:visibility="invisible"
+        android:countDown="false"
+        app:layout_constraintTop_toBottomOf="@id/seek"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textStyle="bold"
+        android:textAppearance="@array/default_color_list"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
