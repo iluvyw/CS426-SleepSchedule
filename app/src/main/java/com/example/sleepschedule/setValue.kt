@@ -54,6 +54,7 @@ interface setValue {
             }
         }
         editor.putInt(key+"Size",values.size)
+        editor.apply()
     }
 
 
