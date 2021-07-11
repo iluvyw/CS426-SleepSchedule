@@ -1,10 +1,10 @@
 package com.example.sleepschedule
 
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calendar.*
 import kotlinx.android.synthetic.main.pop_up.view.*
 
