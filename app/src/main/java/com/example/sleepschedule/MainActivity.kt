@@ -31,5 +31,13 @@ class MainActivity : AppCompatActivity(),setValue,getValue {
             val intent = Intent(this,SleepHourActivity::class.java)
             startActivity(intent)
         }
+        btWelcome.setOnClickListener{
+            val intent = Intent(this, Welcome::class.java)
+            startActivity(intent)
+        }
+        btSetAlarmTime.setOnClickListener{
+            val intent = Intent(this, SetAlarmTime::class.java)
+            startActivity(intent)
+        }
     }
 }
