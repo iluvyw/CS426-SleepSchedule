@@ -68,17 +68,27 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.duration = Toast.LENGTH_SHORT
         toast.setGravity(Gravity.CENTER_VERTICAL,0,0)
         toast.show()
+
+        view.btCloseToast.setOnClickListener {
+            toast.cancel()
+        }
     }
 
-    /*private fun setEditTextResult(month:Int,year:Int) {
+    private fun setEditTextResult(month:Int,year:Int) {
         var totalDays = 0
         var acceptDays = 0
         for (i in 1..dayOfMonth(month,year)){
             var date = generateDateKey(i,month,year)
-            val
-            if (checkAccept(getIntList(this, generateInfoKey(date,"timeSleep"),getIntList(this, generateInfoKey(date,"timeGoal")==true))
+            val timeSleep = getIntList(this, generateInfoKey(date,"timeSleep"))
+            val timeGoal = getIntList(this, generateInfoKey(date,"timeGoal"))
+            if (checkAccept(timeSleep,timeGoal)){
+                acceptDays += 1
+            }
+            totalDays += 1
         }
-    }*/
+        etAcceptDay.setText(acceptDays.toString())
+        etTotalDays.setText(totalDays.toString())
+    }
 
 
     /*private fun setImageViewColor() {
