@@ -10,9 +10,9 @@ import kotlinx.android.synthetic.main.pop_up.view.*
 
 class CalendarActivity : AppCompatActivity(),setValue,getValue {
 
-    var timeStartSleep = listOf<Int>()
+    var numSleep = 0
     var timeSleep = listOf<Int>()
-    var timeGoal = listOf<Int>()
+    var timeGoal = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,13 +20,13 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val date = generateDateKey(dayOfMonth,month+1,year)
-            timeStartSleep = getIntList(this, generateInfoKey(date,"timeStartSleep"))
+            numSleep = getInt(this, generateInfoKey(date,"numSleep"))
             timeSleep = getIntList(this, generateInfoKey(date,"timeSleep"))
-            timeGoal = getIntList(this, generateInfoKey(date,"timeGoal"))
+            timeGoal = getInt(this, generateInfoKey(date,"timeGoal"))
             //tvTitle.setText(numSleep.toString()+timeGoal.toString())
             //tvTitle.setText(generateInfoKey(date,"numSleep"))
-            //setImageViewColor()
-            //setEditTextResult()
+            setImageViewColor()
+            setEditTextResult()
             popupShow()
         }
     }
@@ -40,7 +40,7 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             result += timeSleep[i]
         }
         var percent = 0
-        if (sumList(timeGoal)>0){
+        if (timeGoal>0){
             percent = result * 100 / timeGoal
         }
         view.etGoalTime.setText(timeGoal.toString())
@@ -50,13 +50,13 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         for (i in timeSleep.indices){
             result += timeSleep[i]
         }
-        if (sumList(timeGoal) == 0){
+        if (timeGoal == 0){
             view.ivResult.setBackgroundColor(Color.rgb(255,255,255))
         }
-        else if (result<(0.5* sumList(timeGoal))){
+        else if (result<(0.5*timeGoal)){
             view.ivResult.setBackgroundColor(Color.rgb(255,0,0)) //red
         }
-        else if (result<=(0.75* sumList(timeGoal))){
+        else if (result<=(0.75*timeGoal)){
             view.ivResult.setBackgroundColor(Color.rgb(255,255,0)) //yellow
         }
         else{
@@ -70,12 +70,18 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.show()
     }
 
-    private fun setEditTextResult(month:Int) {
-        var totalDays = 0
-        var acceptDays = 0
-        for (i in ){
-            if (checkAccept())
+    private fun setEditTextResult() {
+        var result = 0
+        for (i in timeSleep.indices){
+            result += timeSleep[i]
         }
+        var percent = 0
+        if (timeGoal>0){
+            percent = result * 100 / timeGoal
+        }
+        tvResult.setText(percent.toString()+"%")
+        etGoalTime.setText(timeGoal.toString())
+        etYourTime.setText(result.toString())
     }
 
     private fun setImageViewColor() {

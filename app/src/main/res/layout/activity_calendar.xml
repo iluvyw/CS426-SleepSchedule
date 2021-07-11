@@ -69,24 +69,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your total days:"/>
+                android:text="Your goal time:"
+                android:id="@+id/tvGoalTime"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
-                android:id="@+id/etTotalDays"/>
+                android:id="@+id/etGoalTime"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your acceptable days:"/>
+                android:text="Your sleep time:"
+                android:id="@+id/tvYourTime"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:editable="false"
-                android:id="@+id/etAcceptDay"/>
+                android:id="@+id/etYourTime"/>
 
 
         </LinearLayout>
