@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalendarActivity"/>
+        <activity android:name=".SleepHourActivity"/>
     </application>
 
 </manifest>

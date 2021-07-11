@@ -27,5 +27,9 @@ class MainActivity : AppCompatActivity(),setValue,getValue {
             val intent = Intent(this,CalendarActivity::class.java)
             startActivity(intent)
         }
+        btSleepSchedule.setOnClickListener{
+            val intent = Intent(this,SleepHourActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
