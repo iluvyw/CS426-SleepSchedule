@@ -17,3 +17,20 @@ fun generateDateKey(day:Int,month:Int,year:Int):String{
 fun generateInfoKey(date: String,attributes: String):String{
     return date+attributes
 }
+
+fun sumList(list: List<Int>):Int{
+    var sum = 0
+    for (i in list.indices) {
+        sum += list[i]
+    }
+    return sum
+}
+
+fun checkAccept(sleepTime: List<Int>,goalTime: List<Int>):Boolean{
+    val total_sleepTime = sumList(sleepTime)
+    val total_goalTime = sumList(goalTime)
+    if (total_sleepTime>=(total_goalTime*0.8)){
+        return true
+    }
+    return false
+}
