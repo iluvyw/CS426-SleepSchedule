@@ -41,7 +41,7 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         }
         var percent = 0
         if (sumList(timeGoal)>0){
-            percent = result * 100 / timeGoal
+            percent = result * 100 / sumList(timeGoal)
         }
         view.etGoalTime.setText(timeGoal.toString())
         view.etSleepTime.setText(result.toString())
@@ -70,15 +70,15 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.show()
     }
 
-    private fun setEditTextResult(month:Int) {
+    /*private fun setEditTextResult(month:Int) {
         var totalDays = 0
         var acceptDays = 0
         for (i in ){
             if (checkAccept())
         }
-    }
+    }*/
 
-    private fun setImageViewColor() {
+    /*private fun setImageViewColor() {
         var result = 0
         for (i in timeSleep.indices){
             result += timeSleep[i]
@@ -95,5 +95,5 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         else{
             ivResult.setBackgroundColor(Color.rgb(0,255,0)) //green
         }
-    }
+    }*/
 }
