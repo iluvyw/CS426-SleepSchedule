@@ -29,7 +29,8 @@ fun sumList(list: List<Int>):Int{
 fun checkAccept(sleepTime: List<Int>,goalTime: List<Int>):Boolean{
     val total_sleepTime = sumList(sleepTime)
     val total_goalTime = sumList(goalTime)
-    if (total_sleepTime>=(total_goalTime*0.8)){
+    if (total_goalTime == 0) return false
+    if (total_sleepTime*10>=(total_goalTime*8)){
         return true
     }
     return false
@@ -49,6 +50,8 @@ fun dayOfMonth(month: Int, year: Int):Int{
         } else {
             if (year % 4 == 0) {
                 return 29
+            } else {
+                return 28
             }
         }
     }
