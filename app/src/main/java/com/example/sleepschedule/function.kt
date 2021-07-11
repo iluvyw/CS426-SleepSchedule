@@ -34,3 +34,26 @@ fun checkAccept(sleepTime: List<Int>,goalTime: List<Int>):Boolean{
     }
     return false
 }
+
+fun dayOfMonth(month: Int, year: Int):Int{
+    if (month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
+        return 31
+    }
+    else if (month == 2) {
+        if (year % 100 == 0) {
+            if (year % 400 == 0) {
+                return 29
+            } else {
+                return 28
+            }
+        } else {
+            if (year % 4 == 0) {
+                return 29
+            }
+        }
+    }
+    else{
+        return 30
+    }
+    return 0
+}

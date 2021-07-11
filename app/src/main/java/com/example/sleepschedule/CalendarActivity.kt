@@ -70,13 +70,16 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.show()
     }
 
-    /*private fun setEditTextResult(month:Int) {
+    /*private fun setEditTextResult(month:Int,year:Int) {
         var totalDays = 0
         var acceptDays = 0
-        for (i in ){
-            if (checkAccept())
+        for (i in 1..dayOfMonth(month,year)){
+            var date = generateDateKey(i,month,year)
+            val
+            if (checkAccept(getIntList(this, generateInfoKey(date,"timeSleep"),getIntList(this, generateInfoKey(date,"timeGoal")==true))
         }
     }*/
+
 
     /*private fun setImageViewColor() {
         var result = 0
