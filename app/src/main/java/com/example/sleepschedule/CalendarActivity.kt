@@ -43,7 +43,7 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         if (sumList(timeGoal)>0){
             percent = result * 100 / sumList(timeGoal)
         }
-        view.etGoalTime.setText(timeGoal.toString())
+        view.etGoalTime.setText(sumList(timeGoal).toString())
         view.etSleepTime.setText(result.toString())
 
         result = 0
