@@ -30,7 +30,7 @@ interface setValue {
         }
     }
 
-    fun setIntList(context: Context, key: String, values: List<Int>){
+    fun setIntList(context: Context, key: String, values: MutableList<Int>){
         val sharedPref = context.getSharedPreferences("myPreference",Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         for (i in values.indices){
@@ -43,7 +43,7 @@ interface setValue {
         editor.apply()
     }
 
-    fun setStringList(context: Context, key: String, values: List<String>){
+    fun setStringList(context: Context, key: String, values: MutableList<String>){
         val sharedPref = context.getSharedPreferences("myPreference",Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         for (i in values.indices){

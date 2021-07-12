@@ -19,7 +19,7 @@ interface getValue {
         return sharedPref.getBoolean(key, false)
     }
 
-    fun getIntList(context: Context,key: String) : List<Int>{
+    fun getIntList(context: Context,key: String) : MutableList<Int>{
         val sharedPref = context.getSharedPreferences("myPreference",Context.MODE_PRIVATE)
         val returnList = mutableListOf<Int>()
         val size = sharedPref.getInt(key+"Size",0)
@@ -30,7 +30,7 @@ interface getValue {
         return returnList
     }
 
-    fun getStringList(context: Context,key: String) : List<String?>{
+    fun getStringList(context: Context,key: String) : MutableList<String?>{
         val sharedPref = context.getSharedPreferences("myPreference",Context.MODE_PRIVATE)
         val returnList = mutableListOf<String?>()
         val size = sharedPref.getInt(key+"Size",0)
