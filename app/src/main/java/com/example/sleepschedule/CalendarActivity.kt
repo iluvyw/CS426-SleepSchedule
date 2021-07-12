@@ -37,6 +37,10 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             popupShow()
         }
 
+        ibSetting.setOnClickListener{
+            //Go to setting activity
+        }
+
     }
 
     private fun popupShow(){

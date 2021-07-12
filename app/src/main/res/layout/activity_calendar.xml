@@ -14,6 +14,7 @@
         android:src="@drawable/ic_setting"
         android:layout_gravity="right"
         android:background="@color/white"
+        android:id="@+id/ibSetting"
         android:layout_weight="1"/>
 
     <TextView
