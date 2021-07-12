@@ -40,24 +40,5 @@ class SetAlarmTime : AppCompatActivity(),setValue,getValue {
         }
     }
     private fun setAlarm(){
-        var alarmMgr: AlarmManager? = null
-        lateinit var alarmIntent: PendingIntent
-        alarmMgr = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, 0)
-        }
-        // Set the alarm to start at approximately 2:00 p.m.
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 14)
-        }
-
-        alarmMgr?.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            alarmIntent
-        )
-
     }
 }
