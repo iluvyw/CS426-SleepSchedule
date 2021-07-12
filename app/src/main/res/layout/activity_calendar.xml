@@ -6,31 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".CalendarActivity"
     android:orientation="vertical"
-    android:layout_margin="20dp">
+    android:layout_marginHorizontal="20dp">
 
     <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:src="@drawable/ic_setting"
         android:layout_gravity="right"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        android:id="@+id/ibSetting"
+        android:layout_weight="1"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textSize="40sp"
         android:text="Sleep Record"
         android:id="@+id/tvTitle"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="2"/>
 
     <CalendarView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/calendarView"/>
+        android:layout_height="0dp"
+        android:id="@+id/calendarView"
+        android:layout_weight="6"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:layout_weight="4">
@@ -64,7 +68,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginRight="40dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Your total days:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:id="@+id/tvDateChoose"/>
 
             <TextView
                 android:layout_width="match_parent"

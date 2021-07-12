@@ -1,12 +1,16 @@
 package com.example.sleepschedule
 
+import android.content.IntentSender
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_calendar.*
 import kotlinx.android.synthetic.main.pop_up.view.*
+import java.time.Duration
+import java.util.*
 
 class CalendarActivity : AppCompatActivity(),setValue,getValue {
 
@@ -17,6 +21,9 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+        val thisYear = Calendar.getInstance().get(Calendar.YEAR).toInt()
+        val thisMonth = Calendar.getInstance().get(Calendar.MONTH).toInt()
+        setEditTextResult(thisMonth+1, thisYear)
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val date = generateDateKey(dayOfMonth,month+1,year)
@@ -26,9 +33,14 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             //tvTitle.setText(numSleep.toString()+timeGoal.toString())
             //tvTitle.setText(generateInfoKey(date,"numSleep"))
             //setImageViewColor()
-            //setEditTextResult()
+            setEditTextResult(month+1, year)
             popupShow()
         }
+
+        ibSetting.setOnClickListener{
+            //Go to setting activity
+        }
+
     }
 
     private fun popupShow(){
@@ -67,11 +79,18 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.view = view
         toast.duration = Toast.LENGTH_SHORT
         toast.setGravity(Gravity.CENTER_VERTICAL,0,0)
-        toast.show()
 
-        view.btCloseToast.setOnClickListener {
-            toast.cancel()
+        val toastCountDown = object : CountDownTimer(1000,1000){
+            override fun onTick(millisUntilFinished: Long) {
+                toast.show()
+            }
+
+            override fun onFinish() {
+                toast.cancel()
+            }
         }
+        toast.show()
+        toastCountDown.start()
     }
 
     private fun setEditTextResult(month:Int,year:Int) {
@@ -81,13 +100,48 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             var date = generateDateKey(i,month,year)
             val timeSleep = getIntList(this, generateInfoKey(date,"timeSleep"))
             val timeGoal = getIntList(this, generateInfoKey(date,"timeGoal"))
-            if (checkAccept(timeSleep,timeGoal)){
+            if (checkAccept(timeSleep,timeGoal)==true){
                 acceptDays += 1
             }
             totalDays += 1
         }
+        tvDateChoose.text = generateChooseDate(month,year)
         etAcceptDay.setText(acceptDays.toString())
         etTotalDays.setText(totalDays.toString())
+        val percent = acceptDays*100/totalDays
+        tvResult.text = percent.toString()+"%"
+        if (totalDays == 0){
+            ivResult.setBackgroundColor(Color.rgb(255,255,255))
+        }
+        else if (percent<50){
+            ivResult.setBackgroundColor(Color.rgb(255,0,0)) //red
+        }
+        else if (percent<=75){
+            ivResult.setBackgroundColor(Color.rgb(255,255,0)) //yellow
+        }
+        else{
+            ivResult.setBackgroundColor(Color.rgb(0,255,0)) //green
+        }
+    }
+
+    private fun generateChooseDate(month: Int, year: Int): String {
+        var returnString:String
+        when (month) {
+            1 -> returnString = "January"
+            2 -> returnString = "February"
+            3 -> returnString = "March"
+            4 -> returnString = "April"
+            5 -> returnString = "May"
+            6 -> returnString = "June"
+            7 -> returnString = "July"
+            8 -> returnString = "August"
+            9 -> returnString = "September"
+            10 -> returnString = "October"
+            11 -> returnString = "November"
+            12 -> returnString = "December"
+            else -> returnString = ""
+        }
+        return returnString+", "+year.toString()
     }
 
 

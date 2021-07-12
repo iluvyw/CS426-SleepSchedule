@@ -1,18 +1,25 @@
 package com.example.sleepschedule
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.SystemClock
+import android.provider.AlarmClock
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.github.stefanodp91.android.circularseekbar.CircularSeekBar
 import com.github.stefanodp91.android.circularseekbar.OnCircularSeekBarChangeListener
 import kotlinx.android.synthetic.main.activity_sleep_hour.*
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class SleepHourActivity : AppCompatActivity(), setValue, getValue {
     private var minute: Int = 0 // Save Current MinuteSleepGoal
     private var hour: Int = 0 // Save Current HourSleepGoal
-
+    private var isFullGoal: Boolean = true
+    private var todayTime: Calendar = Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sleep_hour)
@@ -45,11 +52,15 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
 
     fun startCountTime(view: View) {
         buttonStart.visibility = View.GONE
-        countUpTimer.base = SystemClock.elapsedRealtime()
-        countUpTimer.start()
-        countUpTimer.visibility = View.VISIBLE
+//        countUpTimer.base = SystemClock.elapsedRealtime()
+//        countUpTimer.start()
+//        countUpTimer.visibility = View.VISIBLE
         seek.isEnabled = false
+        buttonEnd.visibility = View.VISIBLE
 
+        setAlarm()
+
+        sendFirstData();
         // Create Countdown Timer
         val startTime = (1000 * 60 * (hour * 60 + minute)).toLong()
         val timer = object : CountDownTimer(startTime, 1000) {
@@ -61,10 +72,62 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
                 seek.text = if (tmp_min < 10) "$tmp_hour:0$tmp_min" else "$tmp_hour:$tmp_min"
             }
 
-            override fun onFinish() {}
+            override fun onFinish() {
+                if (isFullGoal) {
+                    sendLastData()
+                }
+            }
         }
         timer.start()
 
+    }
+
+    private fun sendFirstData() {
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val today = sdf.format(Date())
+        val c: Calendar = Calendar.getInstance()
+        todayTime = c
+        val cur_min = c.get(Calendar.HOUR_OF_DAY)*60+c.get(Calendar.MINUTE)
+        val goal_min = hour*60+minute
+        val timeStartSleep: MutableList<Int> = getIntList(this,today+"timeStartSleep")
+        val timeSleep: MutableList<Int> = getIntList(this,today+"timeSleep")
+        val timeGoal: MutableList<Int> = getIntList(this,today+"timeGoal")
+//        if (getIntList(this,today+"timeStartSleep") == null) {
+//            timeStartSleep = mutableListOf()
+//            timeSleep = mutableListOf()
+//            timeGoal = mutableListOf()
+//        } else {
+//            timeStartSleep = getIntList(this,today+"timeStartSleep")
+//            timeSleep = getIntList(this,today+"timeSleep")
+//            timeGoal = getIntList(this,today+"timeGoal")
+//        }
+
+        timeStartSleep.add(cur_min)
+        timeGoal.add(goal_min)
+        setIntList(this, today+"timeStartSleep",timeStartSleep)
+        setIntList(this, today+"timeGoal",timeGoal)
+    }
+
+    private fun setAlarm() {
+        val c: Calendar = Calendar.getInstance()
+        c.add(Calendar.MINUTE, minute)
+        c.add(Calendar.HOUR_OF_DAY, hour)
+
+        val t = Toast.makeText(
+            this,
+            "Set Alarm For ${c.get(Calendar.HOUR_OF_DAY)}:${c.get(Calendar.MINUTE)}",
+            Toast.LENGTH_LONG
+        )
+        t.show()
+
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, "TIME TO WAKEUP !!!")
+            putExtra(AlarmClock.EXTRA_HOUR, c.get(Calendar.HOUR_OF_DAY))
+            putExtra(AlarmClock.EXTRA_MINUTES, c.get(Calendar.MINUTE))
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
     fun progressToText(progress: Float): String {
@@ -78,5 +141,40 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
     fun minuteToProgress(minute_left: Int): Float {
         val res: Double = (minute_left * 100 * 1.0 / 720)
         return res.toFloat()
+    }
+
+    fun endCountTime(view: View) {
+        seek.progress = 0.toFloat()
+        seek.text = "Hour"
+        val t = Toast.makeText(
+            this,
+            "Alarm Cancelled",
+            Toast.LENGTH_LONG
+        )
+        t.show()
+
+        sendLastData()
+        isFullGoal = false
+
+
+//        val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM)
+//        alarmIntent.apply { putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, this) }
+//        startActivity(alarmIntent)
+//
+//        val t = Toast.makeText(
+//            this,
+//            "Alarm Cancelled",
+//            Toast.LENGTH_LONG
+//        )
+//        t.show()
+    }
+
+    private fun sendLastData() {
+        val today = SimpleDateFormat("dd/MM/yy").format(Date())
+        val c: Calendar = Calendar.getInstance()
+        val diff: Long = c.timeInMillis - todayTime.timeInMillis
+        val timeSleep: MutableList<Int> = getIntList(this,today+"timeSleep")
+        timeSleep.add((diff/60000).toInt())
+        setIntList(this,today+"timeSleep",timeSleep)
     }
 }
