@@ -29,6 +29,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_SleepDuration"
         app:cs_text="Hour"
+        app:cs_step="0.5"
         app:cs_text_progress="false"
         app:cs_color_list="@array/color_list"
         app:cs_progressWidth="7dp"
@@ -36,12 +37,6 @@
         app:cs_dynamic_text_color="true"
         app:cs_indicatorRadius="15dp"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
     <Button
         android:id="@+id/buttonStart"
@@ -50,21 +45,11 @@
         android:text="@string/Start"
         android:textSize="20sp"
         android:backgroundTint="#8BC34A"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/seek"
         android:onClick="startCountTime"/>
 
-    <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline"
-        android:backgroundTint="#009688"
-        app:layout_constraintTop_toBottomOf="@id/seek" />
 
     <Chronometer
         android:layout_width="wrap_content"

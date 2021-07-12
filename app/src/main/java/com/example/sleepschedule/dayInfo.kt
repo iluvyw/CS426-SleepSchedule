@@ -1,7 +1,10 @@
 package com.example.sleepschedule
 
+import java.util.*
+
 class dayInfo(
-    numSleep:Int,
+    date: Date,
+    timeStartSleep: List<Int>,
     timeSleep:List<Int>,
-    timeGoal:Int
+    timeGoal:List<Int>
 )
