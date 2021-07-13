@@ -1,5 +1,6 @@
 package com.example.sleepschedule
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity(),setValue,getValue {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btCalendar.setOnClickListener {
-            var timeSleep = mutableListOf<Int>(10,20,30,40)
+            /*var timeSleep = mutableListOf<Int>(10,20,30,40)
             var timeStartSleep = mutableListOf<Int>(1,2,3,4,5)
             var timeGoal = mutableListOf<Int>(10,20,30,40)
             setIntList(this, generateInfoKey("14/07/2021","timeSleep"),timeSleep)
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(),setValue,getValue {
             timeGoal = mutableListOf<Int>(100,1000,100,100)
             setIntList(this, generateInfoKey("12/07/2021","timeSleep"),timeSleep)
             setIntList(this, generateInfoKey("12/07/2021","timeStartSleep"),timeStartSleep)
-            setIntList(this, generateInfoKey("12/07/2021","timeGoal"),timeGoal)
+            setIntList(this, generateInfoKey("12/07/2021","timeGoal"),timeGoal)*/
 
             val intent = Intent(this,CalendarActivity::class.java)
             startActivity(intent)
@@ -47,6 +48,15 @@ class MainActivity : AppCompatActivity(),setValue,getValue {
         btSetAlarmTime.setOnClickListener{
             val intent = Intent(this, SetAlarmTime::class.java)
             startActivity(intent)
+        }
+
+        btReset.setOnClickListener {
+            val sharedPref = getSharedPreferences("myPreference", Context.MODE_PRIVATE)
+            val editor = sharedPref.edit()
+            editor.apply{
+                clear()
+                apply()
+            }
         }
     }
 }
