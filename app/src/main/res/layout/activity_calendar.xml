@@ -23,6 +23,8 @@
         android:textSize="40sp"
         android:text="Sleep Record"
         android:id="@+id/tvTitle"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-light"
         android:layout_gravity="center_horizontal"
         android:layout_weight="2"/>
 
@@ -47,18 +49,22 @@
 
             <ImageView
                 android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
+                android:layout_weight="2"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/black"
-                android:id="@+id/ivResult" />
+                android:id="@+id/ivResult"/>
 
             <TextView
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="00%"
+                android:layout_weight="1"
                 android:id="@+id/tvResult"
+                android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-light"
                 android:layout_gravity="center_horizontal"/>
 
 
@@ -75,32 +81,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Your total days:"
-                android:textSize="20sp"
+                android:textSize="40sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-light"
                 android:id="@+id/tvDateChoose"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Your total days:"/>
+                android:layout_height="36dp"
+                android:orientation="horizontal">
 
-            <EditText
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:text="Your total days:"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:id="@+id/etTotalDays"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:layout_marginLeft="10sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:id="@+id/etTotalDays"/>
+                android:layout_height="36dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Your acceptable days:"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:text="Your acceptable days:"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:id="@+id/etAcceptDay"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:id="@+id/etAcceptDay"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:layout_marginLeft="10sp"/>
 
+            </LinearLayout>
 
         </LinearLayout>
 
