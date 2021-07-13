@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
@@ -25,6 +26,8 @@ class SetAlarmTime : AppCompatActivity(),setValue,getValue {
         btSetAlarmTime.setOnClickListener{
             setInt(this, "hourRemind", timePicker.hour);
             setInt(this, "minRemind", timePicker.minute);
+            //removeAlarm()
+            //createAlarm(getInt(this,"hourRemind"), getInt(this,"minRemind"))
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
@@ -39,6 +42,20 @@ class SetAlarmTime : AppCompatActivity(),setValue,getValue {
             time_picker.currentMinute = minutes
         }
     }
-    private fun setAlarm(){
+    fun createAlarm(hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, "Bed time!!!")
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+    fun removeAlarm(){
+        val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM);
+        alarmIntent.apply{putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, "Bed time!!!")}
+        startActivity(alarmIntent)
     }
 }

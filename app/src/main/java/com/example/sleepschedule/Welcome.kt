@@ -2,6 +2,7 @@ package com.example.sleepschedule
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_set_alarm_time.*
 import kotlinx.android.synthetic.main.activity_welcome.*
@@ -17,7 +18,7 @@ class Welcome : AppCompatActivity(),setValue,getValue {
 
         val format: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         val calendar: Calendar = Calendar.getInstance()
-        calendar.setFirstDayOfWeek(Calendar.MONDAY)
+        calendar.firstDayOfWeek = Calendar.MONDAY
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
         val days = arrayOfNulls<String>(7)
@@ -28,24 +29,43 @@ class Welcome : AppCompatActivity(),setValue,getValue {
         var hourOfSlept : Int = 0;
         var dayOfSleep : Int = 0;
         for (i in 0..6) {
-            var sleepTime : Int = sumList(getIntList(this, days[i] + "timeSleep"))
+            var sleepTime : Int = 0//sumList(getIntList(this, days[i] + "timeSleep"))
             if(sleepTime != 0) dayOfSleep++;
             hourOfSlept+=sleepTime;
         }
-        hourOfSlept/=60 * dayOfSleep;
+        if(dayOfSleep > 0) hourOfSlept/=60 * dayOfSleep;
         if(hourOfSlept < 20) {
             var str : String = "";
             if(hourOfSlept > 1) str += "s"
-            quote.setText("You've only slept " + hourOfSlept + " hour"+str+" a day this week.\n Please sleep more!")
+            quote.text = "You've only slept " + hourOfSlept + " hour"+str+" a day this week.\n Please sleep more!"
             imageWelcome.setImageResource(R.drawable.sad)
         }else{
-            quote.setText("You're on track! \n Keep going!")
+            quote.text = "You're on track! \n Keep going!"
             imageWelcome.setImageResource(R.drawable.happy)
         }
+        //removeAlarm()
+        //createAlarm(getInt(this,"hourRemind"), getInt(this,"minRemind"))
 
         btNextWelcome.setOnClickListener{
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun createAlarm(hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, "Bed time!!!")
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+    fun removeAlarm(){
+        val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM);
+        alarmIntent.apply{putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, "Bed time!!!")}
+        startActivity(alarmIntent)
     }
 }
