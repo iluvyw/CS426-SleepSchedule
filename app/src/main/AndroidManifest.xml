@@ -15,8 +15,8 @@
         tools:replace="android:theme">
         <activity android:name=".SleepResult"></activity>
         <activity android:name=".SetAlarmTime" />
-        <activity android:name=".Welcome" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
