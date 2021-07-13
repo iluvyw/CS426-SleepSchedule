@@ -1,4 +1,4 @@
-    package com.example.sleepschedule
+package com.example.sleepschedule
 
 import android.content.Intent
 import android.os.Build
@@ -65,11 +65,13 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
         val startTime = (1000 * 60 * (hour * 60 + minute)).toLong()
         val timer = object : CountDownTimer(startTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                var tmp_min: Int = (millisUntilFinished.div(60000)).toInt()
-                seek.progress = minuteToProgress(tmp_min)
-                var tmp_hour: Int = tmp_min / 60
-                tmp_min -= tmp_hour * 60
-                seek.text = if (tmp_min < 10) "$tmp_hour:0$tmp_min" else "$tmp_hour:$tmp_min"
+                if (isFullGoal) {
+                    var tmp_min: Int = (millisUntilFinished.div(60000)).toInt()
+                    seek.progress = minuteToProgress(tmp_min)
+                    var tmp_hour: Int = tmp_min / 60
+                    tmp_min -= tmp_hour * 60
+                    seek.text = if (tmp_min < 10) "$tmp_hour:0$tmp_min" else "$tmp_hour:$tmp_min"
+                }
             }
 
             override fun onFinish() {
@@ -82,37 +84,28 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
 
     }
 
+    var today = SimpleDateFormat("dd/MM/yyyy").format(Date())
     private fun sendFirstData() {
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        val today = sdf.format(Date())
+
         val c: Calendar = Calendar.getInstance()
         todayTime = c
-        val cur_min = c.get(Calendar.HOUR_OF_DAY)*60+c.get(Calendar.MINUTE)
-        val goal_min = hour*60+minute
-        val timeStartSleep: MutableList<Int> = getIntList(this,today+"timeStartSleep")
-        val timeSleep: MutableList<Int> = getIntList(this,today+"timeSleep")
-        val timeGoal: MutableList<Int> = getIntList(this,today+"timeGoal")
-//        if (getIntList(this,today+"timeStartSleep") == null) {
-//            timeStartSleep = mutableListOf()
-//            timeSleep = mutableListOf()
-//            timeGoal = mutableListOf()
-//        } else {
-//            timeStartSleep = getIntList(this,today+"timeStartSleep")
-//            timeSleep = getIntList(this,today+"timeSleep")
-//            timeGoal = getIntList(this,today+"timeGoal")
-//        }
+        val cur_min = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE)
+        val goal_min = hour * 60 + minute
+        val timeStartSleep: MutableList<Int> = getIntList(this, today + "timeStartSleep")
+        val timeSleep: MutableList<Int> = getIntList(this, today + "timeSleep")
+        val timeGoal: MutableList<Int> = getIntList(this, today + "timeGoal")
 
         timeStartSleep.add(cur_min)
         timeGoal.add(goal_min)
-        setIntList(this, today+"timeStartSleep",timeStartSleep)
-        setIntList(this, today+"timeGoal",timeGoal)
+        setIntList(this, today + "timeStartSleep", timeStartSleep)
+        setIntList(this, today + "timeGoal", timeGoal)
     }
 
     private fun setAlarm() {
         val c: Calendar = Calendar.getInstance()
         c.add(Calendar.MINUTE, minute)
         c.add(Calendar.HOUR_OF_DAY, hour)
-
+        isFullGoal = true
         val t = Toast.makeText(
             this,
             "Set Alarm For ${c.get(Calendar.HOUR_OF_DAY)}:${c.get(Calendar.MINUTE)}",
@@ -157,24 +150,16 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
         isFullGoal = false
 
 
-//        val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM)
-//        alarmIntent.apply { putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, this) }
-//        startActivity(alarmIntent)
-//
-//        val t = Toast.makeText(
-//            this,
-//            "Alarm Cancelled",
-//            Toast.LENGTH_LONG
-//        )
-//        t.show()
+        val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM)
+        alarmIntent.apply { putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, "TIME TO WAKEUP !!!") }
+        startActivity(alarmIntent)
     }
 
     private fun sendLastData() {
-        val today = SimpleDateFormat("dd/MM/yy").format(Date())
         val c: Calendar = Calendar.getInstance()
         val diff: Long = c.timeInMillis - todayTime.timeInMillis
-        val timeSleep: MutableList<Int> = getIntList(this,today+"timeSleep")
-        timeSleep.add((diff/60000).toInt())
-        setIntList(this,today+"timeSleep",timeSleep)
+        val timeSleep = getIntList(this, today + "timeSleep")
+        timeSleep.add((diff / 60000).toInt())
+        setIntList(this, today + "timeSleep", timeSleep)
     }
 }
