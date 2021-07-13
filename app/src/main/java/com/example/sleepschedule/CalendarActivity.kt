@@ -1,5 +1,6 @@
 package com.example.sleepschedule
 
+import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Color
 import android.os.Bundle
@@ -38,7 +39,8 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         }
 
         ibSetting.setOnClickListener{
-            //Go to setting activity
+            val intent = Intent(this,SetAlarmTime::class.java)
+            startActivity(intent)
         }
 
     }
@@ -100,18 +102,23 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             var date = generateDateKey(i,month,year)
             val timeSleep = getIntList(this, generateInfoKey(date,"timeSleep"))
             val timeGoal = getIntList(this, generateInfoKey(date,"timeGoal"))
-            if (checkAccept(timeSleep,timeGoal)==true){
-                acceptDays += 1
+            if (sumList(timeGoal)>0) {
+                if (checkAccept(timeSleep, timeGoal) == true) {
+                    acceptDays += 1
+                }
+                totalDays += 1
             }
-            totalDays += 1
         }
         tvDateChoose.text = generateChooseDate(month,year)
-        etAcceptDay.setText(acceptDays.toString())
-        etTotalDays.setText(totalDays.toString())
-        val percent = acceptDays*100/totalDays
+        etAcceptDay.text = acceptDays.toString()
+        etTotalDays.text = totalDays.toString()
+        var percent = 0
+        if (totalDays > 0) {
+            percent = acceptDays * 100 / totalDays
+        }
         tvResult.text = percent.toString()+"%"
-        if (totalDays == 0){
-            ivResult.setBackgroundColor(Color.rgb(255,255,255))
+        if (percent == 0){
+            ivResult.setBackgroundColor(Color.rgb(0,0,0))
         }
         else if (percent<50){
             ivResult.setBackgroundColor(Color.rgb(255,0,0)) //red
@@ -127,18 +134,18 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
     private fun generateChooseDate(month: Int, year: Int): String {
         var returnString:String
         when (month) {
-            1 -> returnString = "January"
-            2 -> returnString = "February"
-            3 -> returnString = "March"
-            4 -> returnString = "April"
+            1 -> returnString = "Jan"
+            2 -> returnString = "Feb"
+            3 -> returnString = "Mar"
+            4 -> returnString = "Apr"
             5 -> returnString = "May"
-            6 -> returnString = "June"
-            7 -> returnString = "July"
-            8 -> returnString = "August"
-            9 -> returnString = "September"
-            10 -> returnString = "October"
-            11 -> returnString = "November"
-            12 -> returnString = "December"
+            6 -> returnString = "Jun"
+            7 -> returnString = "Jul"
+            8 -> returnString = "Aug"
+            9 -> returnString = "Sep"
+            10 -> returnString = "Oct"
+            11 -> returnString = "Nov"
+            12 -> returnString = "Dec"
             else -> returnString = ""
         }
         return returnString+", "+year.toString()
