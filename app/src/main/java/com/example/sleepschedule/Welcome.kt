@@ -16,6 +16,14 @@ class Welcome : AppCompatActivity(),setValue,getValue {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
+        if (getBoolean(this,"used") == false){
+            setBoolean(this,"used",true)
+            val intent = Intent(this,SetAlarmTime::class.java)
+            startActivity(intent)
+            return
+        }
+
+
         val format: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         val calendar: Calendar = Calendar.getInstance()
         calendar.firstDayOfWeek = Calendar.MONDAY
@@ -43,11 +51,9 @@ class Welcome : AppCompatActivity(),setValue,getValue {
             quote.text = "You're on track! \n Keep going!"
             imageWelcome.setImageResource(R.drawable.happy)
         }
-        //removeAlarm()
-        //createAlarm(getInt(this,"hourRemind"), getInt(this,"minRemind"))
 
         btNextWelcome.setOnClickListener{
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this,CalendarActivity::class.java)
             startActivity(intent)
         }
     }
