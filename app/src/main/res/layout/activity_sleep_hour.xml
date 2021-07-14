@@ -13,7 +13,7 @@
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/SleepDuration"
-        android:textColor="@color/pink_500"
+        android:textColor="@color/black"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
