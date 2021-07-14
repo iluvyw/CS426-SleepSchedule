@@ -31,9 +31,6 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             timeStartSleep = getIntList(this, generateInfoKey(date,"timeStartSleep"))
             timeSleep = getIntList(this, generateInfoKey(date,"timeSleep"))
             timeGoal = getIntList(this, generateInfoKey(date,"timeGoal"))
-            //tvTitle.setText(numSleep.toString()+timeGoal.toString())
-            //tvTitle.setText(generateInfoKey(date,"numSleep"))
-            //setImageViewColor()
             setEditTextResult(month+1, year)
             popupShow()
         }
@@ -87,7 +84,7 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         toast.duration = Toast.LENGTH_SHORT
         toast.setGravity(Gravity.CENTER_VERTICAL,0,0)
 
-        val toastCountDown = object : CountDownTimer(1000,1000){
+        val toastCountDown = object : CountDownTimer(2000,1000){
             override fun onTick(millisUntilFinished: Long) {
                 toast.show()
             }
@@ -155,24 +152,4 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         }
         return returnString+", "+year.toString()
     }
-
-
-    /*private fun setImageViewColor() {
-        var result = 0
-        for (i in timeSleep.indices){
-            result += timeSleep[i]
-        }
-        if (timeGoal == 0){
-            ivResult.setBackgroundColor(Color.rgb(255,255,255))
-        }
-        else if (result<(0.5*timeGoal)){
-            ivResult.setBackgroundColor(Color.rgb(255,0,0)) //red
-        }
-        else if (result<=(0.75*timeGoal)){
-            ivResult.setBackgroundColor(Color.rgb(255,255,0)) //yellow
-        }
-        else{
-            ivResult.setBackgroundColor(Color.rgb(0,255,0)) //green
-        }
-    }*/
 }
