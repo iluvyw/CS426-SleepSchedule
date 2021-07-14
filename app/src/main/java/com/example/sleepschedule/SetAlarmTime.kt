@@ -2,6 +2,7 @@ package com.example.sleepschedule
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -28,10 +29,19 @@ class SetAlarmTime : AppCompatActivity(),setValue,getValue {
         btSetAlarmTime.setOnClickListener{
             setInt(this, "hourRemind", timePicker.hour);
             setInt(this, "minRemind", timePicker.minute);
-            //removeAlarm()
-            createAlarm(getInt(this,"hourRemind"), getInt(this,"minRemind"))
-            //val intent = Intent(this,calendarView::class.java)
-            //startActivity(intent)
+
+            val intentCalendar = Intent(this,calendarView::class.java)
+
+            val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM);
+            alarmIntent.apply{putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, "Bed time!!!")}
+            val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+                putExtra(AlarmClock.EXTRA_MESSAGE, "Bed time!!!")
+                putExtra(AlarmClock.EXTRA_HOUR, getInt(applicationContext,"hourRemind"))
+                putExtra(AlarmClock.EXTRA_MINUTES, getInt(applicationContext,"minRemind"))
+            }
+            TaskStackBuilder.create(this).addNextIntent(intentCalendar
+            ).addNextIntentWithParentStack(intent).addNextIntentWithParentStack(alarmIntent)
+                .startActivities()
         }
     }
     private fun setTime(time_picker : TimePicker, hours: Int, minutes: Int) {

@@ -21,6 +21,8 @@ class Welcome : AppCompatActivity(),setValue,getValue {
             val intent = Intent(this,SetAlarmTime::class.java)
             startActivity(intent)
             return
+        }else {
+            createAlarm(getInt(this,"hourRemind"), getInt(this,"minRemind"))
         }
 
 
