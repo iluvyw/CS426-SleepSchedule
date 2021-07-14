@@ -79,7 +79,11 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
             override fun onFinish() {
                 if (isFullGoal) {
                     sendLastData()
-                    startNextActivityAfterSleep();
+                    //buttonStart.visibility = View.VISIBLE
+                    //buttonEnd.visibility = View.GONE
+                    val intent = Intent(baseContext,CalendarActivity::class.java)
+                    startActivity(intent)
+                    //startNextActivityAfterSleep();
                 }
             }
         }
@@ -153,6 +157,9 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
             Toast.LENGTH_LONG
         )
         t.show()
+
+        //buttonStart.visibility = View.VISIBLE
+        //buttonEnd.visibility = View.GONE
 
         sendLastData()
         isFullGoal = false
