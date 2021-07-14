@@ -1,5 +1,6 @@
 package com.example.sleepschedule
 
+import android.app.TaskStackBuilder
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -71,17 +72,24 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
                     var tmp_hour: Int = tmp_min / 60
                     tmp_min -= tmp_hour * 60
                     seek.text = if (tmp_min < 10) "$tmp_hour:0$tmp_min" else "$tmp_hour:$tmp_min"
+                } else {
                 }
             }
 
             override fun onFinish() {
                 if (isFullGoal) {
                     sendLastData()
+                    startNextActivityAfterSleep();
                 }
             }
         }
         timer.start()
 
+    }
+
+    private fun startNextActivityAfterSleep() {
+        val intent = Intent(this,CalendarActivity::class.java)
+        startActivity(intent)
     }
 
     var today = SimpleDateFormat("dd/MM/yyyy").format(Date())
@@ -152,7 +160,12 @@ class SleepHourActivity : AppCompatActivity(), setValue, getValue {
 
         val alarmIntent = Intent(AlarmClock.ACTION_DISMISS_ALARM)
         alarmIntent.apply { putExtra(AlarmClock.ALARM_SEARCH_MODE_LABEL, "TIME TO WAKEUP !!!") }
-        startActivity(alarmIntent)
+
+        val startIntent = Intent(this,CalendarActivity::class.java)
+        TaskStackBuilder.create(this).addNextIntent(startIntent).addNextIntentWithParentStack(alarmIntent)
+            .startActivities()
+        //startActivity(alarmIntent)
+        //startNextActivityAfterSleep()
     }
 
     private fun sendLastData() {
