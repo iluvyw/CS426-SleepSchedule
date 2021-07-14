@@ -43,6 +43,11 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             startActivity(intent)
         }
 
+        btStartSleep.setOnClickListener {
+            val intent = Intent(this,SleepHourActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun popupShow(){
@@ -57,8 +62,8 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
         if (sumList(timeGoal)>0){
             percent = result * 100 / sumList(timeGoal)
         }
-        view.etGoalTime.setText(sumList(timeGoal).toString())
-        view.etSleepTime.setText(result.toString())
+        view.etGoalTime.setText(sumList(timeGoal).toString()+" minutes")
+        view.etSleepTime.setText(result.toString()+ " minutes")
 
         result = 0
         for (i in timeSleep.indices){
@@ -117,7 +122,7 @@ class CalendarActivity : AppCompatActivity(),setValue,getValue {
             percent = acceptDays * 100 / totalDays
         }
         tvResult.text = percent.toString()+"%"
-        if (percent == 0){
+        if (totalDays == 0){
             ivResult.setBackgroundColor(Color.rgb(0,0,0))
         }
         else if (percent<50){

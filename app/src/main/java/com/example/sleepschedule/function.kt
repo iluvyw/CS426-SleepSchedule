@@ -30,7 +30,7 @@ fun checkAccept(sleepTime: List<Int>,goalTime: List<Int>):Boolean{
     val total_sleepTime = sumList(sleepTime)
     val total_goalTime = sumList(goalTime)
     if (total_goalTime == 0) return false
-    if (total_sleepTime*10>=(total_goalTime*8)){
+    if (total_sleepTime*100>=(total_goalTime*75)){
         return true
     }
     return false
